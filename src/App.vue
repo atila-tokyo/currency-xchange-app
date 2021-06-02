@@ -5,7 +5,7 @@
       <div class="h4">All currencies</div>
     </div>
     <div class="card-body">
-
+     <ListCurrencies :quotes="quotes" />
     </div>
   </div>
 </div>
@@ -14,9 +14,11 @@
 <script>
 import { onMounted, reactive, toRefs } from 'vue';
 import api from '@/services/api'
+import ListCurrencies from './components/ListCurrencies';
 
 export default { 
   name: 'App',
+  components: { ListCurrencies },
   setup() {
 
     const data = reactive({

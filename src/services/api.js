@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 export default {
-    latest() {
-        return api.get('/latest');
+    all() {
+        return api.get('/all');
     }
 }
