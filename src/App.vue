@@ -17,7 +17,8 @@
         <ListCurrencies 
         :quotes="quotes" 
         :listen-quotations="listenQuotations"
-        @listen="onListen" 
+        @listen="onListen"
+        @unlisten="onUnlisten" 
         />
       </div>
     </div>
@@ -49,12 +50,18 @@ export default {
       data.listenQuotations.push(code)
     };
 
+    const onUnlisten = (code) => {
+      data.listenQuotations = data.listenQuotations
+      .filter((key) => key != code);
+    };
+    
     return { 
       ...toRefs(data),
-      onListen,  
-    }
-  } 
-}
+      onListen,
+      onUnlisten,  
+    };
+  }, 
+};
 </script>
 
 <style>
