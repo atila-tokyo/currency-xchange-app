@@ -5,7 +5,7 @@
         <div class="h4">Following</div>
       </div>
       <div class="card-body">
-        <WatchList />
+        <WatchList :listenQuotations="listenQuotations" @unlisten="onUnlisten" />
       </div>
     </div>
 
@@ -51,8 +51,7 @@ export default {
     };
 
     const onUnlisten = (code) => {
-      data.listenQuotations = data.listenQuotations
-      .filter((key) => key != code);
+      data.listenQuotations = data.listenQuotations.filter((key) => key != code);
     };
     
     return { 

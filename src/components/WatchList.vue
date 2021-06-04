@@ -1,5 +1,9 @@
 <template>
-    <ListCurrencies :quotes="quotes" :listen-quotations="listenQuotations" />
+    <ListCurrencies 
+    :quotes="quotes" 
+    :listen-quotations="listenQuotations" 
+    @unlisten="onUnlist" 
+    />
     <div class="mt-2 text-right">
     <cite class="text-small">
         Updating again in <b>{{ nextUpdate }} seconds</b>
@@ -9,18 +13,43 @@
 
 <script>
 import ListCurrencies from './ListCurrencies'
-import { ref } from 'vue';
+import { onMounted, reactive, ref, toRefs, watch } from 'vue';
+import api from '@/services/api';
 
 export default {
     components: { ListCurrencies },
     props: {
         listenQuotations: { type: Array, required: true }
     },
-    setup() {
-       const quotes = ref({})
+    setup(props, { emit }) {
+    //    const interval = ref(null);
+       const quotes = ref({});
        const nextUpdate = ref(30);
+
+       const methods = reactive({
+           onUnlisten(code) {
+               emit('unlisten', code)
+           },
+           async refresher() {
+               const { data } = await api.listen(props.listenQuotations);
+               quotes.value = data;
+           }
+       });
+
+       onMounted(() => {
+           methods.refresher();
+       });
+
+       watch(props, () => {
+           methods.refresher()
+       });
+
        
-       return { quotes, nextUpdate };
+       return { 
+        ...toRefs(methods),
+        quotes, 
+        nextUpdate 
+       };
     }
 }
 </script>
