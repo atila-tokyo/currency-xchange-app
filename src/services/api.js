@@ -7,5 +7,8 @@ const api = axios.create({
 export default {
     all() {
         return api.get('/all');
+    },
+    listen(quotations = []) {
+        return api.get(`/all/${quotations.join()}`)
     }
 }

@@ -7,7 +7,6 @@
                 <th>Max</th>
                 <th>Min</th>
                 <th>Var</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -28,13 +27,12 @@
             href="#" 
             class="btn btn-primary btn-sm tooltip tooltip-left"
             data-tooltip="Follow"
+            @click="$emit('listen', key)"
             >
             <i class="icon icon-plus"></i>
             </a>
         </tr>
         </tbody>
-        
-        <td></td>
     </table>
 </template>
 
@@ -42,6 +40,10 @@
 
 export default {
  
-    props: { quotes: { type: Object, required: true }}
+    props: { 
+        quotes: { type: Object, required: true },
+        listenQuotations: { type: Array, required: true }
+    },
+    emits: ['listen'],    
 };
 </script>
