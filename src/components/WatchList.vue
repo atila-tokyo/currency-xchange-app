@@ -23,6 +23,7 @@ export default {
     props: {
         listenQuotations: { type: Array, required: true }
     },
+    emits: ['unlisten'],
     setup(props, { emit }) {
        const interval = ref(null);
        const quotes = ref({});
@@ -62,7 +63,8 @@ export default {
         });
 
        watch(props, () => {
-           methods.refresher()
+           methods.refresher();
+           methods.restartInterval();
        });
 
        
