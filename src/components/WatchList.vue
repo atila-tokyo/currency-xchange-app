@@ -13,7 +13,7 @@
 
 <script>
 import ListCurrencies from './ListCurrencies'
-import { onMounted, reactive, ref, toRefs, watch } from 'vue';
+import { onMounted, onUnmounted, reactive, ref, toRefs, watch } from 'vue';
 import api from '@/services/api';
 
 const CURRENT_UPDATE_TIME = 30;
@@ -43,7 +43,7 @@ export default {
                        nextUpdate.value = CURRENT_UPDATE_TIME;
                        this.refresher();
                    }
-               })
+               }, 1000)
            },
 
            async refresher() {
@@ -54,7 +54,12 @@ export default {
 
        onMounted(() => {
            methods.refresher();
+           methods.restartInterval();
        });
+
+        onUnmounted(() => {
+            clearInterval(interval.value);
+        });
 
        watch(props, () => {
            methods.refresher()
